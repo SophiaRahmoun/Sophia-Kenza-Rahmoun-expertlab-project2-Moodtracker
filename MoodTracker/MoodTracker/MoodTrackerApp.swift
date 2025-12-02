@@ -6,9 +6,12 @@
 //
 
 import SwiftUI
+import UserNotifications
 
 @main
 struct MoodTrackerApp: App {
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+
     @AppStorage("appColorScheme") var appColorScheme: String = "system"
     let persistenceController = PersistenceController.shared
 
@@ -18,5 +21,13 @@ struct MoodTrackerApp: App {
                 .preferredColorScheme(ColorSchemeManager.resolve(appColorScheme))
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
+    }
+}
+
+class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDelegate {
+    func application (_ application: UIApplication,
+                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+        UNUserNotificationCenter.current().delegate = self
+        return true
     }
 }

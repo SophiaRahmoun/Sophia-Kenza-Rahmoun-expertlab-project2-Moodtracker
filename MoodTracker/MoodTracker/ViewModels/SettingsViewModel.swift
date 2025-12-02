@@ -10,7 +10,7 @@ import CoreLocation
 import UserNotifications
 import PhotosUI
 
-class SettingsViewModel: ObservableObject {
+class SettingsViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
 
     @AppStorage("appColorScheme") var appColorScheme: String = "system"
 
@@ -21,7 +21,9 @@ class SettingsViewModel: ObservableObject {
 
     private let locationManager = CLLocationManager()
 
-    init() {
+    override init() {
+        super.init()
+        locationManager.delegate = self
         checkLocationStatus()
         checkNotificationStatus()
         checkPhotoStatus()
@@ -71,5 +73,9 @@ class SettingsViewModel: ObservableObject {
     func toggleWatchConnection() {
         watchConnected.toggle()
         // watch connectivity here later
+    }
+    
+    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+        self.locationStatus = manager.authorizationStatus
     }
 }

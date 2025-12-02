@@ -8,5 +8,8 @@
 	</array>
     <key>NSLocationWhenInUseUsageDescription</key>
     <string>We use your location to show your local weather</string>
+    
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>This app needs access to your photos to attach images to your daily summary.</string>
 </dict>
 </plist>

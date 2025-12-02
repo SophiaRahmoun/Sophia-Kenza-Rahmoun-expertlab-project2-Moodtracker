@@ -81,6 +81,32 @@ struct SettingsView: View {
                  .cornerRadius(12)
              }
          }
+    func permissionToggle(title: String, isOn: Bool, requestAction: @escaping () -> Void) -> some View {
+           HStack {
+               VStack(alignment: .leading) {
+                   Text(title)
+                       .font(.headline)
+                   Text(isOn ? "Allowed" : "Not allowed")
+                       .font(.subheadline)
+                       .foregroundColor(.secondary)
+               }
+
+               Spacer()
+
+               Toggle("", isOn: Binding(
+                   get: { isOn },
+                   set: { newValue in
+                       if newValue == true {
+                           requestAction()   // ask permissionn
+                       } else {
+                           openAppSettings() // cannot disable, we redirect
+                       }
+                   }
+               ))
+               .labelsHidden()
+           }
+       }
+    
 
          func permissionRow(title: String, status: String, action: @escaping () -> Void) -> some View {
              HStack {
@@ -102,6 +128,12 @@ struct SettingsView: View {
              }
          }
      }
+func openAppSettings() {
+        if let url = URL(string: UIApplication.openSettingsURLString) {
+            UIApplication.shared.open(url)
+        }
+    }
+
 
      struct SettingsCard<Content: View>: View {
          let title: String
