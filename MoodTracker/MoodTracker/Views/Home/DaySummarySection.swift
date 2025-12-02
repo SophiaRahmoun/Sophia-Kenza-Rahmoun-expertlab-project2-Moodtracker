@@ -14,26 +14,28 @@ struct DaySummarySection: View {
             VStack(alignment: .leading, spacing: 12) {
                 Text("Write a summary about your day")
                     .font(.headline)
-
+                
                 TextEditor(text: $viewModel.daySummary)
                     .frame(height: 150)
                     .padding()
                     .background(Color.gray.opacity(0.1))
                     .cornerRadius(15)
             }
-
-            Button {
+            
+            Button(action: {
                 viewModel.selectPhoto()
-            } label: {
+            }) {
                 Image(systemName: "photo")
                     .font(.title2)
                     .padding(10)
-                    .foregroundColor(.gray)
+                    .background(Color(.systemGray5).opacity(0.8))
+                    .foregroundColor(Color(.systemGray))
+                    .clipShape(Circle())
+                    .shadow(radius: 2)
             }
-            .frame(width: .infinity)
             .padding(.trailing, 16)
-            .padding(.bottom, 10)
-            
+            .padding(.bottom, 16)
+        }
             Button(action: {
                 viewModel.saveSummary()
             }) {
@@ -43,10 +45,10 @@ struct DaySummarySection: View {
                     .padding()
                     .frame(maxWidth: .infinity)
                     .background(Color.yellow)
-                    .cornerRadius(14)
-                    .padding(.top, 10)
+                    .cornerRadius(45)
+                    .padding(.top, 5)
             }
-        }
+        
     }
 }
 #Preview {
