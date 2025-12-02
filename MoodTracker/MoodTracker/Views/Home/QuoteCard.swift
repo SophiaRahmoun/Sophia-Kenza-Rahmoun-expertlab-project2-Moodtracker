@@ -14,7 +14,7 @@ struct QuoteCard: View {
     var body: some View {
         if let quote = quote {
             VStack(alignment: .leading, spacing: 8) {
-                Text("💬 \"\(quote.quote)\"")
+                Text("\"\(quote.quote)\"")
                     .font(.body)
                     .italic()
 
@@ -27,4 +27,7 @@ struct QuoteCard: View {
             .cornerRadius(12)
         }
     }
+}
+#Preview {
+    HomeView()
 }

@@ -19,13 +19,14 @@ struct HomeView: View {
                 VStack(spacing: 20) {
                     
                     WeatherCard(weather: weatherVM.weather)
+                    QuoteCard(quote: quoteVM.quote)
+
 
                     Text("How are you feeling today?")
                         .font(.largeTitle)
                         .bold()
                         .frame(maxWidth: .infinity, alignment: .leading)
 
-                    QuoteCard(quote: quoteVM.quote)
 
                     MoodSelector(
                         selectedMood: $viewModel.selectedMood
@@ -42,7 +43,7 @@ struct HomeView: View {
                 .padding(.bottom, 32)
                 .frame(maxWidth: min(geometry.size.width * 0.95, 700))
                 .navigationTitle("Today")
-                .frame(minHeight: geometry.size.height)
+                .frame(minHeight: geometry.size.height - 50)
             }
         }
         .sheet(isPresented: $viewModel.showImagePicker) {
@@ -53,6 +54,9 @@ struct HomeView: View {
                let lon = locationManager.longitude {
                 weatherVM.fetchWeather(lat: lat, lon: lon)
             }
+        }
+        .onAppear {
+            quoteVM.fetchQuote()
         }
     }
 }

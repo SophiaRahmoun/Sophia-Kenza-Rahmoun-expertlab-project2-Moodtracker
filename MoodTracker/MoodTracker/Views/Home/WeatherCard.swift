@@ -12,17 +12,27 @@ struct WeatherCard: View {
     
     var body: some View {
         if let weather = weather {
-            HStack(spacing: 12){
+            HStack(){
                 Image(systemName: weather.icon)
-                    .font(.title)
+                    .font(.system(size: 52))
+                    .foregroundColor(.yellow)
                 
-                Text("\(weather.temperature)° •  \(weather.description)")
-                    .font(.headline)
-                
+                VStack(alignment: .leading) {
+                    
+                    Text("\(weather.temperature)°")
+                        .font(.system(size: 32))
+                        .bold()
+                    
+                    Text(weather.description.capitalized)
+                        .font(.headline)
+                        .foregroundColor(.secondary)
+                }
             }
-            .padding()
-            .background(Color.blue.opacity(0.1))
+
             .cornerRadius(15)
         }
     }
+}
+#Preview {
+    HomeView()
 }

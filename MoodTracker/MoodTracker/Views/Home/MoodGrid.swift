@@ -34,3 +34,6 @@ struct MoodGrid: View {
         }
     }
 }
+#Preview {
+    HomeView()
+}

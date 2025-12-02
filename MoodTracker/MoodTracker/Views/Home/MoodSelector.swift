@@ -12,11 +12,10 @@ struct MoodSelector: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text("Select your mood:")
-                .font(.headline)
+          
 
             ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 24) {
+                HStack(spacing: 10) {
                     ForEach(MoodType.allCases, id: \.self) { mood in
                         Button {
                             selectedMood = mood
@@ -29,8 +28,11 @@ struct MoodSelector: View {
                         }
                     }
                 }
-                .padding(.vertical, 8)
+                .padding(.vertical, 2)
             }
         }
     }
+}
+#Preview {
+    HomeView()
 }

@@ -14,8 +14,27 @@ class HomeViewModel: ObservableObject {
     @Published var selectedImage: UIImage? = nil
     @Published var showImagePicker: Bool = false
     
+    @Published var saveSuccess: Bool = false
 
     func selectPhoto() {
         showImagePicker = true
     }
+    
+    func saveSummary(){
+        let trimmed = daySummary.trimmingCharacters(in: .whitespacesAndNewlines)
+
+             guard !trimmed.isEmpty else {
+                 print("⚠️ Summary is empty — not saving.")
+                 saveSuccess = false
+                 return
+             }
+
+             print("Saved summary:")
+             print("Mood: \(selectedMood)")
+             print("Summary: \(trimmed)")
+             print("Image attached: \(selectedImage != nil ? "Yes" : "No")")
+
+             saveSuccess = true
+    }
+    
 }
