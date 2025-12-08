@@ -36,9 +36,12 @@ struct DaySummarySection: View {
             .padding(.trailing, 16)
             .padding(.bottom, 16)
         }
-            Button(action: {
-                viewModel.saveSummary()
-            }) {
+            Button {
+                Task {
+                   await viewModel.saveSummary()
+
+                }
+            } label: {
                 Text("Save my summary")
                     .font(.headline)
                     .foregroundColor(.black)

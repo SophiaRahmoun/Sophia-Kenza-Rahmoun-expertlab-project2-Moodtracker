@@ -52,7 +52,7 @@ struct DayDetailView: View {
 
             Divider().padding(.vertical, 8)
 
-            if day.hasSummary {
+            if day.hasSummary == true {
                 VStack(alignment: .leading, spacing: 8) {
                     Text("Your Summary")
                         .font(.headline)

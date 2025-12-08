@@ -8,8 +8,9 @@
 
 import SwiftUI
 
-enum MoodType: String, CaseIterable, Codable {
+enum MoodType: String, CaseIterable, Codable, Identifiable {
     case happy, sad, neutral, angry, excited
+    var id: String {rawValue}
 
        var emoji: String {
            switch self {

@@ -37,7 +37,7 @@ struct CalendarView: View {
                                 .clipShape(Circle())
                                 .foregroundColor(.primary)
 
-                            if day.hasSummary {
+                            if day.hasSummary ?? false {
                                 Circle()
                                     .fill(Color.yellow)
                                     .frame(width: 6, height: 6)
