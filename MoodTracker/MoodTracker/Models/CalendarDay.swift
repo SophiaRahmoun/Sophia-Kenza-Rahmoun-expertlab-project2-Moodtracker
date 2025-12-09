@@ -33,3 +33,14 @@ struct CalendarDay: Identifiable, Codable {
            self.summary = summary
        }
 }
+extension CalendarDay {
+    enum CodingKeys: String, CodingKey {
+        case id = "_id"
+        case date
+        case mood
+        case summary
+        case photoUrl
+        case hasSummary
+    }
+}
+

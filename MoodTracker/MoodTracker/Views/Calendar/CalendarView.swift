@@ -51,6 +51,16 @@ struct CalendarView: View {
         .sheet(item: $vm.selectedDay) { day in
             DayDetailView(day: day)
         }
+        .onReceive(NotificationCenter.default.publisher(for: .didSaveDay)) {
+            _ in Task {
+                await vm.loadMonth()
+            }
+        }
+        .onAppear {
+            Task {
+                await vm.loadMonth()
+            }
+        }
     }
 }
 

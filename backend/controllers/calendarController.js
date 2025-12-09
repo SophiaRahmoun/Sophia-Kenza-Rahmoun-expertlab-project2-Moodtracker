@@ -46,15 +46,24 @@ export const getDay = async (req, res) => {
 export const getMonth = async (req, res) => {
     try {
         const { userId, month } = req.query;
+        console.log("GET /month called with:", { userId, month });
 
-        const entries = await CalendarEntry.find({
-            userId,
-            date: { $regex: `^${month}` } // example "2025-12"
-        });
+
+        const query = {
+            // ⚠️ TEMPORAIRE : on commente userId pour tester
+            // userId,
+            date: { $regex: `^${month}` } // "2025-12"
+        };
+
+        const entries = await CalendarEntry.find(query);
+
+        console.log("Entries found:", entries.length);
+
 
         res.json(entries);
 
     } catch (err) {
+        console.error("Error in getMonth:", err);
         res.status(500).json({ error: err.message });
     }
 };

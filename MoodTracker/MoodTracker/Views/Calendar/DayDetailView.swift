@@ -52,31 +52,30 @@ struct DayDetailView: View {
 
             Divider().padding(.vertical, 8)
 
-            if day.hasSummary == true {
-                VStack(alignment: .leading, spacing: 8) {
-                    Text("Your Summary")
-                        .font(.headline)
-                    
-                    Text(fetchSummary(for: day.date))
-                        .font(.body)
-                        .padding()
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .background(Color.gray.opacity(0.1))
-                        .cornerRadius(10)
-                }
-                .padding(.horizontal)
+            if let summary = day.summary, !summary.isEmpty {
+                Text(summary)
+                    .padding()
+                    .background(Color.gray.opacity(0.1))
+                    .cornerRadius(10)
             }
 
-            if let image = fetchImage(for: day.date) {
-                VStack(alignment: .leading, spacing: 8) {
-                    Text("Your Photo")
-                        .font(.headline)
+            if let urlString = day.photoUrl,
+               let url = URL(string: "http://localhost:4000\(urlString)") {
 
-                    Image(uiImage: image)
-                        .resizable()
-                        .scaledToFit()
-                        .cornerRadius(12)
-                        .padding(.horizontal)
+                AsyncImage(url: url) { phase in
+                    switch phase {
+                    case .empty:
+                        ProgressView()
+                    case .success(let image):
+                        image
+                            .resizable()
+                            .scaledToFit()
+                            .cornerRadius(12)
+                    case .failure(_):
+                        Text("Could not load image")
+                    @unknown default:
+                        EmptyView()
+                    }
                 }
             }
 
@@ -85,13 +84,4 @@ struct DayDetailView: View {
         .padding(.bottom, 20)
     }
 
-    func fetchSummary(for date: Date) -> String {
-        // todo:  backend -> récupérer summary pour date
-        return "This is a placeholder summary for this day."
-    }
-
-    func fetchImage(for date: Date) -> UIImage? {
-        // plus tard will return image fetched (backend)
-        return nil
-    }
 }

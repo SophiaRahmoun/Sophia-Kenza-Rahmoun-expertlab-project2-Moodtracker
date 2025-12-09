@@ -39,7 +39,6 @@ struct DaySummarySection: View {
             Button {
                 Task {
                    await viewModel.saveSummary()
-
                 }
             } label: {
                 Text("Save my summary")

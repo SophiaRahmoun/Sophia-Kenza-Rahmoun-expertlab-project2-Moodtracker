@@ -13,11 +13,21 @@ class CalendarViewModel: ObservableObject {
     @Published var selectedDay: CalendarDay?
     
     private let calendar = Calendar.current
-    @AppStorage("usedId") var userId: String = UUID().uuidString
+    @AppStorage("userId") var userId: String = UUID().uuidString
     
     
     init() {
         generateCurrentMonth()
+        
+        NotificationCenter.default.addObserver(
+               forName: .didSaveDay,
+               object: nil,
+               queue: .main
+           ) { [weak self] _ in
+               Task {
+                   await self?.loadMonth()
+               }
+           }
     }
     
     func loadMonth() async {
@@ -28,7 +38,7 @@ class CalendarViewModel: ObservableObject {
                 userId: userId,
                 month: monthString
             )
-            
+            print("loaded entries for month: \(monthString): \(entries.count)")
             updateDays(entries: entries)
         } catch {
             print("Error fetchMonth:", error)

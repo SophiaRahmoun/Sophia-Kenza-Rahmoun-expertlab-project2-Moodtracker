@@ -54,6 +54,9 @@ class HomeViewModel: ObservableObject {
             print("- image: \(selectedImage != nil ? "yes" : "no")")
 
             saveSuccess = true
+            
+            NotificationCenter.default.post(name: .didSaveDay, object: nil)
+
         } catch {
             print("Error saving to backend:", error)
             saveSuccess = false
@@ -68,3 +71,5 @@ class HomeViewModel: ObservableObject {
         return df.string(from: Date())
     }
 }
+
+

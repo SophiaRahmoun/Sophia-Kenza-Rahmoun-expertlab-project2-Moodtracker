@@ -10,6 +10,8 @@ struct HomeView: View {
     @StateObject private var weatherVM = WeatherViewModel()
     @StateObject private var quoteVM = QuoteViewModel()
     @StateObject private var locationManager = LocationManager()
+    @State private var showSaveAlert = false
+    @State private var saveWasSuccessful = false
 
     var body: some View {
         GeometryReader { geometry in
@@ -57,6 +59,30 @@ struct HomeView: View {
         }
         .onAppear {
             quoteVM.fetchQuote()
+        }
+        .onChange(of: viewModel.saveSuccess) { newValue in
+            saveWasSuccessful = newValue
+            showSaveAlert = true
+
+            if newValue {
+                //say info was received !
+                NotificationCenter.default.post(name: .didSaveDay, object: nil)
+            }
+        }
+        .alert(isPresented: $showSaveAlert) {
+            if saveWasSuccessful {
+                return Alert(
+                    title: Text("Saved"),
+                    message: Text("Your mood and summary were saved successfully."),
+                    dismissButton: .default(Text("OK"))
+                )
+            } else {
+                return Alert(
+                    title: Text("Not saved"),
+                    message: Text("Your summary cannot be empty."),
+                    dismissButton: .default(Text("OK"))
+                )
+            }
         }
     }
 }

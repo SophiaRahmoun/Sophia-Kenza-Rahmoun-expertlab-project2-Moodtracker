@@ -14,6 +14,7 @@ class WeatherViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
     private let locationManager = CLLocationManager()
     private let apiKey = "c10b46bf180949619de233934250112"
     
+    
     override init() {
         super.init()
         locationManager.delegate = self
@@ -28,7 +29,13 @@ class WeatherViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
     }
     
     func fetchWeather(lat: Double, lon: Double) {
-        guard let url = URL(string: "https://api.weatherapi.com/v1/current.json?key=\(apiKey)&q=\(lat),\(lon)") else {
+        let latStr = String(format: "%.4f", lat)
+        let lonStr = String(format: "%.4f", lon)
+        
+        print("Fetch weather for: \(latStr), \(lonStr)")
+
+        
+        guard let url = URL(string: "https://api.weatherapi.com/v1/current.json?key=\(apiKey)&q=\(latStr),\(lonStr)") else {
             return
         }
         

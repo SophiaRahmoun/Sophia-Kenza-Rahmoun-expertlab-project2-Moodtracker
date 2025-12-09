@@ -13,7 +13,7 @@ class CalendarService {
     static let shared = CalendarService()
     private init() {}
 
-    private let baseURL = "http://localhost:4000/api/calendar"
+    private let baseURL = "http://10.2.88.131:4000/api/calendar"
 
     func fetchMonth(userId: String, month: String) async throws -> [CalendarDay] {
         guard let url = URL(string: "\(baseURL)/month?userId=\(userId)&month=\(month)") else {
@@ -21,7 +21,7 @@ class CalendarService {
         }
 
         let (data, _) = try await URLSession.shared.data(from: url)
-        let entries = try JSONDecoder().decode([CalendarDay].self, from: data)
+        let entries = try JSONDecoder.calendarDecoder.decode([CalendarDay].self, from: data)
         return entries
     }
 
@@ -32,7 +32,7 @@ class CalendarService {
 
         let (data, _) = try await URLSession.shared.data(from: url)
 
-        let entry = try JSONDecoder().decode(CalendarDay?.self, from: data)
+        let entry = try JSONDecoder.calendarDecoder.decode(CalendarDay?.self, from: data)
         return entry
     }
 
